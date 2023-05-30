@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTweet: AI generated Tweet </title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>BetterTweet</h1>
+    <p>ChatGPT based tweet generater. Write profession tweet the next time!</p>
+
+    <b>Input tweet</b><br>
+    <textarea id="otweet"></textarea><br>
+    <button id="btn">Make it better</button>
+    <loading style="color:green; display: none;">Writing your tweet professionally......</loading>
+    <hr>
+    <b>BetterTweet</b><br>
+    <textarea id="ftweet"></textarea>
+
+    <script>
+        $('#btn').click(function () {
+            $('#btn').hide()
+            $('loading').show()
+            var settings = {
+                "url": "http://localhost:3000/tweet",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                "data": {
+                    "tweet": $('#otweet').val()
+                }
+            };
+
+            $.ajax(settings).done(function (response) {
+                $('#btn').show()
+                $('loading').hide()
+                $('#ftweet').val(response)
+            });
+
+
+        })
+    </script>
+
+
+    <style>
+        textarea {
+            width: 300px;
+            height: 100px;
+        }
+    </style>
+
+</body>
+
+</html>
